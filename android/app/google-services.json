@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "558134590799",
+    "project_id": "pratice-palliative",
+    "storage_bucket": "pratice-palliative.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:558134590799:android:54d050dd47f6259973993a",
+        "android_client_info": {
+          "package_name": "com.example.hello_pratice"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDAml2SXJ1HkrqS8iUW59cq2pAFQgmDV1Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
