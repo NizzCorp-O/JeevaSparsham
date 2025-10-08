@@ -4,7 +4,6 @@ import 'package:hello_pratice/core/app_snackbar.dart';
 import 'package:hello_pratice/core/widgets/custom_button.dart';
 import 'package:hello_pratice/features/auth/application/bloc/auth_bloc.dart';
 
-
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hello_pratice/features/centers/application/bloc/center_bloc.dart';
 import 'package:hello_pratice/features/centers/presentation/screens/centers_screen.dart';
@@ -26,7 +25,6 @@ class _LoginFormState extends State<LoginForm> {
   void dispose() {
     // TODO: implement dispose
     super.dispose();
-
     _usernameController.dispose();
     _passwordController.dispose();
   }
@@ -41,7 +39,7 @@ class _LoginFormState extends State<LoginForm> {
       padding: EdgeInsets.all(25),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(16)),
-        color: AppColors.primary,
+        color: AppColors.tertiary,
         border: Border.all(color: AppColors.borderPrimary, width: 1),
         boxShadow: [
           BoxShadow(
@@ -104,15 +102,16 @@ class _LoginFormState extends State<LoginForm> {
                     });
                   },
                   child: _obscureText
-                    ? Icon(
+                      ? Icon(
                           size: 20,
                           Icons.visibility_off,
                           color: Color.fromRGBO(170, 183, 184, 1),
-                        ): Icon(
+                        )
+                      : Icon(
                           size: 20,
                           Icons.visibility,
                           color: Color.fromRGBO(170, 183, 184, 1),
-                        )
+                        ),
                 ),
               ),
             ),
@@ -140,7 +139,7 @@ class _LoginFormState extends State<LoginForm> {
                         ? CircularProgressIndicator()
                         : CustomButton(
                             width: screenWidth * 0.778,
-                            height: screenHeight * 0.059,
+                            height: screenHeight * 0.065,
                             onTap: () {
                               if (_formKey.currentState!.validate()) {
                                 context.read<AuthBloc>().add(
@@ -154,7 +153,7 @@ class _LoginFormState extends State<LoginForm> {
                                 _passwordController.clear();
                               }
                             },
-                            backgroundColor: AppColors.quaternary,
+                            backgroundColor: AppColors.secondary,
                             label: 'Sign In',
                           ));
                   },

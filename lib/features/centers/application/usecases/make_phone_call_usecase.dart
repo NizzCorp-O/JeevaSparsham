@@ -4,6 +4,10 @@ class MakePhoneCallUseCase {
   final ICenterRepository repository;
   MakePhoneCallUseCase(this.repository);
   Future<void> call(String phoneNumber) {
-    return repository.makePhoneCall(phoneNumber);
+    try {
+      return repository.makePhoneCall(phoneNumber);
+    } catch (e) {
+      rethrow;
+    }
   }
 }

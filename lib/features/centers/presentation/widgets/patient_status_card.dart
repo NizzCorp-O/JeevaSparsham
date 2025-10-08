@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hello_pratice/core/app_colors.dart';
 
 class PatientStatusCard extends StatelessWidget {
   final double width;
@@ -18,20 +19,19 @@ class PatientStatusCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      alignment: Alignment.center,
       width: width,
       height: height,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(9999)),
         color: backgroundColor,
-        border: Border.all(color: Color.fromRGBO(229, 231, 235, 1), width: 1),
+        border: Border.all(color: AppColors.borderSecondary, width: 1),
       ),
-      child: Center(
-        child: Text(
-          label,
-          style: Theme.of(
-            context,
-          ).textTheme.bodyLarge?.copyWith(fontSize: 12, color: labelColor),
-        ),
+      child: Text(
+        label,
+        style: Theme.of(
+          context,
+        ).textTheme.bodyLarge?.copyWith(fontSize: 12, color: labelColor),
       ),
     );
   }

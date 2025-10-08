@@ -14,14 +14,18 @@ class CentersScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocListener<CenterBloc, CenterState>(
-      listenWhen: (previous, current) => current is CentersError,
+      listenWhen: (previous, current) =>
+          current is CentersError || current is SearchCentersError,
       listener: (BuildContext context, CenterState state) {
         if (state is CentersError) {
           AppSnackbar.show(context, message: state.message);
         }
+        if (state is SearchCentersError) {
+          AppSnackbar.show(context, message: state.message);
+        }
       },
       child: Scaffold(
-        appBar: CustomAppBar(title: 'Palliative Care Centers'),
+        appBar: CustomAppBar('Palliative Care Centers'),
         body: Padding(
           padding: const EdgeInsets.all(16),
           child: Column(
@@ -35,13 +39,14 @@ class CentersScreen extends StatelessWidget {
         floatingActionButton: FloatingActionButton(
           shape: CircleBorder(),
           onPressed: () {
+         
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => CreateCenterScreen()),
             );
           },
-          backgroundColor: AppColors.quaternary,
-          child: Icon(Icons.add, color: AppColors.backgroundPrimary, size: 28),
+          backgroundColor: AppColors.secondary,
+          child: Icon(Icons.add, color: AppColors.tertiary, size: 28),
         ),
       ),
     );

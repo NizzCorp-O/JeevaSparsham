@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class CenterAddressRow extends StatelessWidget {
   final String location;
-  const CenterAddressRow(this.location,{super.key});
+  const CenterAddressRow(this.location, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +12,7 @@ class CenterAddressRow extends StatelessWidget {
         SizedBox(width: 10),
         Expanded(
           child: Text(
-           location,
+            location,
             maxLines: 2,
             style: Theme.of(
               context,

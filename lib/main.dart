@@ -12,9 +12,10 @@ import 'package:hello_pratice/features/auth/infrastructure/auth_repository_impl.
 import 'package:hello_pratice/features/auth/presentation/screens/login_screen.dart';
 import 'package:hello_pratice/features/centers/Infrastructure/center_repository_impl.dart';
 import 'package:hello_pratice/features/centers/application/bloc/center_bloc.dart';
-import 'package:hello_pratice/features/centers/application/usecases/add_center_usecase.dart';
+import 'package:hello_pratice/features/centers/application/usecases/create_center_usecase.dart';
 import 'package:hello_pratice/features/centers/application/usecases/delete_center_usecase.dart';
 import 'package:hello_pratice/features/centers/application/usecases/edit_center_usecase.dart';
+import 'package:hello_pratice/features/centers/application/usecases/get_address_from_coordinates_usecase.dart';
 import 'package:hello_pratice/features/centers/application/usecases/get_all_centers_usecase.dart';
 import 'package:hello_pratice/features/centers/application/usecases/get_center_details_usecase.dart';
 import 'package:hello_pratice/features/centers/application/usecases/make_phone_call_usecase.dart';
@@ -22,8 +23,9 @@ import 'package:hello_pratice/features/centers/application/usecases/pick_image_u
 import 'package:hello_pratice/features/centers/application/usecases/pick_location_usecase.dart';
 import 'package:hello_pratice/features/centers/application/usecases/search_centers_usecase.dart';
 import 'package:hello_pratice/features/centers/application/usecases/search_location_usecase.dart';
+import 'package:hello_pratice/features/centers/application/usecases/search_place_suggestions_usecase.dart';
 import 'package:hello_pratice/features/centers/domain/repositories/i_center_repository.dart';
-
+//CHANGED NEW
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -58,7 +60,7 @@ Future<void> main() async {
               centersUsecase: GetAllCentersUsecase(
                 context.read<ICenterRepository>(),
               ),
-              addCenterUseCase: AddCenterUseCase(
+              createCenterUsecase: CreateCenterUsecase(
                 context.read<ICenterRepository>(),
               ),
               editCenterUsecase: EditCenterUsecase(
@@ -79,6 +81,13 @@ Future<void> main() async {
               searchLocationUsecase: SearchLocationUsecase(
                 context.read<ICenterRepository>(),
               ),
+              getAddressFromCoordinatesUseCase:
+                  GetAddressFromCoordinatesUseCase(
+                    context.read<ICenterRepository>(),
+                  ),
+              searchPlaceSuggestionsUseCase: SearchPlaceSuggestionsUseCase(
+                context.read<ICenterRepository>(),
+              ),
             ),
           ),
         ],
@@ -96,13 +105,18 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        scaffoldBackgroundColor: AppColors.backgroundPrimary,
+        scaffoldBackgroundColor: AppColors.tertiary,
+
         inputDecorationTheme: AppInputThemes.inputDecorationTheme,
+
         textTheme: TextTheme(
+          labelLarge: AppTextStyles.labelLarge,
+          bodySmall: AppTextStyles.bodySmall,
+
           headlineLarge: AppTextStyles.headlineLarge,
           bodyLarge: AppTextStyles.bodyLarge,
           headlineSmall: AppTextStyles.headlineSmal,
-          bodySmall: AppTextStyles.bodySmall,
+
           bodyMedium: AppTextStyles.bodyMeduim,
         ),
       ),

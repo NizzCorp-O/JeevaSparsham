@@ -1,4 +1,4 @@
-import 'package:hello_pratice/features/centers/domain/entities/center.dart';
+import 'package:hello_pratice/features/centers/domain/entities/palliative_center.dart';
 import 'package:hello_pratice/features/centers/domain/repositories/i_center_repository.dart';
 
 class GetCenterDetailsUsecase {
@@ -6,7 +6,11 @@ class GetCenterDetailsUsecase {
 
   GetCenterDetailsUsecase(this.repository);
 
-  Future<Center> call(String centerId) async {
-    return await repository.getCenterDetails(centerId);
+  Future<PalliativeCenter> call(String centerId) async {
+    try {
+      return await repository.getCenterDetails(centerId);
+    } catch (e) {
+      rethrow;
+    }
   }
 }

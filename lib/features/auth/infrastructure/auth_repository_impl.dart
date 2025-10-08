@@ -6,6 +6,9 @@ class AuthRepositoryImpl extends IAuthRepository {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   final CollectionReference usersCollection = FirebaseFirestore.instance
       .collection('users');
+
+  //LOG IN
+
   @override
   Future<String?> login({
     required String email,
@@ -22,6 +25,7 @@ class AuthRepositoryImpl extends IAuthRepository {
     }
   }
 
+
   @override
   Future<void> logout() async {
     try {
@@ -30,6 +34,8 @@ class AuthRepositoryImpl extends IAuthRepository {
       throw "Logout failed. Please try again later.";
     }
   }
+
+//CHECK ROLE
 
   @override
   Future<String> getUserRole(String uid) async {

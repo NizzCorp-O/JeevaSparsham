@@ -1,7 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hello_pratice/features/centers/application/usecases/add_center_usecase.dart';
+import 'package:hello_pratice/features/centers/application/usecases/create_center_usecase.dart';
 import 'package:hello_pratice/features/centers/application/usecases/delete_center_usecase.dart';
 import 'package:hello_pratice/features/centers/application/usecases/edit_center_usecase.dart';
+import 'package:hello_pratice/features/centers/application/usecases/get_address_from_coordinates_usecase.dart';
 import 'package:hello_pratice/features/centers/application/usecases/get_all_centers_usecase.dart';
 import 'package:hello_pratice/features/centers/application/usecases/get_center_details_usecase.dart';
 import 'package:hello_pratice/features/centers/application/usecases/make_phone_call_usecase.dart';
@@ -9,7 +10,8 @@ import 'package:hello_pratice/features/centers/application/usecases/pick_image_u
 import 'package:hello_pratice/features/centers/application/usecases/pick_location_usecase.dart';
 import 'package:hello_pratice/features/centers/application/usecases/search_centers_usecase.dart';
 import 'package:hello_pratice/features/centers/application/usecases/search_location_usecase.dart';
-import 'package:hello_pratice/features/centers/domain/entities/center.dart';
+import 'package:hello_pratice/features/centers/application/usecases/search_place_suggestions_usecase.dart';
+import 'package:hello_pratice/features/centers/domain/entities/palliative_center.dart';
 import 'package:meta/meta.dart';
 import 'package:latlong2/latlong.dart';
 
@@ -19,7 +21,7 @@ part 'center_state.dart';
 class CenterBloc extends Bloc<CenterEvent, CenterState> {
   PickLocationUseCase pickLocationUseCase;
   GetAllCentersUsecase centersUsecase;
-  AddCenterUseCase addCenterUseCase;
+  CreateCenterUsecase createCenterUsecase;
   EditCenterUsecase editCenterUsecase;
   DeleteCenterUsecase deleteCenterUsecase;
   GetCenterDetailsUsecase getCenterDetailsUsecase;
@@ -27,8 +29,11 @@ class CenterBloc extends Bloc<CenterEvent, CenterState> {
   MakePhoneCallUseCase makePhoneCallUseCase;
   PickImageUseCase pickImageUseCase;
   SearchLocationUsecase searchLocationUsecase;
-
+  GetAddressFromCoordinatesUseCase getAddressFromCoordinatesUseCase;
+  SearchPlaceSuggestionsUseCase searchPlaceSuggestionsUseCase;
   CenterBloc({
+    required this.searchPlaceSuggestionsUseCase,
+    required this.getAddressFromCoordinatesUseCase,
     required this.searchLocationUsecase,
     required this.pickLocationUseCase,
     required this.pickImageUseCase,
@@ -37,7 +42,7 @@ class CenterBloc extends Bloc<CenterEvent, CenterState> {
     required this.getCenterDetailsUsecase,
     required this.deleteCenterUsecase,
     required this.centersUsecase,
-    required this.addCenterUseCase,
+    required this.createCenterUsecase,
     required this.editCenterUsecase,
   }) : super(CenterInitial()) {
     //GET ALL CENTERS
@@ -54,6 +59,7 @@ class CenterBloc extends Bloc<CenterEvent, CenterState> {
     });
 
     //GET CENTER DETAILS
+
     on<GetCenterDetailsEvent>((event, emit) async {
       try {
         emit(CenterDetailLoading());
@@ -66,24 +72,13 @@ class CenterBloc extends Bloc<CenterEvent, CenterState> {
       }
     });
 
-    //GET SEARCH SUGGESSION
 
-    on<LocationSearchQueryChanged>((event, emit) async {
-     
-      try {
-        final suggestions = await searchLocationUsecase.call(event.query);
-        emit(LocationSearchLoaded(suggestions));
-      } catch (e) {
-        emit(LocationSearchError(e.toString()));
-      }
-    });
 
     //SEARCH CENTERS
 
     on<SearchCenters>((event, emit) async {
       try {
         emit(SearchCentersLoading());
-
         final searachedCenters = await searchCentersUsecase.call(event.query);
         emit(SearchCentersLoaded(searachedCenters));
       } catch (e) {
@@ -91,18 +86,7 @@ class CenterBloc extends Bloc<CenterEvent, CenterState> {
       }
     });
 
-    //PICK LOCATION
-
-    on<SearchLocationEvent>((event, emit) async {
-      try {
-        final pickedLocation = await pickLocationUseCase.call(event.query);
-        emit(MapUpdated(pickedLocation));
-      } catch (e) {
-        emit(MapError(e.toString()));
-      }
-    });
-
-    //MAKE PHONE CALL
+    //CALL CENTER
 
     on<MakePhoneCallEvent>((event, emit) async {
       try {
@@ -114,29 +98,6 @@ class CenterBloc extends Bloc<CenterEvent, CenterState> {
       }
     });
 
-    //PICK IMAGE
-
-    on<PickImageFromGallery>((event, emit) async {
-      try {
-        final imagePath = await pickImageUseCase.call();
-        emit(ImagePicked(imagePath!));
-      } catch (e) {
-        emit(ImagePickFailure(e.toString()));
-      }
-    });
-
-    //ADD CENTERS
-    on<AddCenterRequested>((event, emit) async {
-      try {
-        emit(AddCenterLoading());
-
-        await addCenterUseCase.call(event.center);
-
-        emit(AddCenterSuccess("Center added successfully!"));
-      } catch (e) {
-        emit(CentersError(e.toString()));
-      }
-    });
     //EDIT CENTER
     on<EditCenterRequested>((event, emit) async {
       try {
@@ -164,6 +125,91 @@ class CenterBloc extends Bloc<CenterEvent, CenterState> {
       } catch (e) {
         emit(CentersError(e.toString()));
       }
+    });
+
+    // CREATE CENTER
+
+    on<CreateCenterRequested>((event, emit) async {
+      try {
+        emit(CreateCenterLoading());
+
+        await createCenterUsecase.call(event.center);
+
+        emit(CreateCenterSuccess("Center added successfully!"));
+      } catch (e) {
+        emit(CreateCenterError(e.toString()));
+      }
+    });
+
+    //PICK IMAGE
+
+    on<PickImageFromGallery>((event, emit) async {
+      try {
+        final imagePath = await pickImageUseCase.call();
+        emit(ImagePicked(imagePath!));
+      } catch (e) {
+        emit(ImagePickFailure(e.toString()));
+      }
+    });
+
+    on<ClearImageEvent>((event, emit) async {
+      emit(ImagePickFailure('Image cleared'));
+    });
+
+    //GET THE ADDRESS ON THE LOCATION
+
+    on<GetAddressFromCoordinatesRequested>((event, emit) async {
+      try {
+        final address = await getAddressFromCoordinatesUseCase.call(
+          lat: event.lat,
+          lon: event.lon,
+        );
+        emit(AddressLoaded(address!));
+      } catch (e) {
+        emit(AddressError(e.toString()));
+      }
+    });
+
+    //MOVE MARKER
+
+    on<MarkerMovedEvent>((event, emit) async {
+      try {
+        emit(MarkerMoved(event.newPosition));
+      } catch (e) {
+        emit(MarkerMoveError("Failed to move marker."));
+      }
+    });
+
+    on<ClearLocationEvent>((event, emit) async {
+      emit(MarkerBackState(LatLng(11.2588, 75.7804)));
+    });
+
+    //SEARCH LOCATION IN MAP
+
+    on<SearchLocationEvent>((event, emit) async {
+      try {
+        final location = await searchLocationUsecase.call(event.query);
+        emit(LocationLoaded(location!));
+      } catch (e) {
+        emit(LocationError(e.toString()));
+      }
+    });
+
+    //SEARCH PLACE BY KEYWORD
+
+    on<SearchPlaceSuggestionsEvent>((event, emit) async {
+      try {
+        final suggestions = await searchPlaceSuggestionsUseCase.call(
+          event.query,
+        );
+        emit(PlaceSuggestionsLoaded(suggestions));
+      } catch (e) {
+        emit(PlaceSuggestionsError(e.toString()));
+      }
+    });
+
+    on<ClearPlaceSuggestionsEvent>((event, emit) {
+      emit(PlaceSuggestionsLoaded([]));
     });
   }
 }

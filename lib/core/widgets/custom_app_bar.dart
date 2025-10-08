@@ -3,7 +3,7 @@ import 'package:hello_pratice/core/app_colors.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
-  const CustomAppBar({super.key, required this.title});
+  const CustomAppBar(this.title, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -11,12 +11,19 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       backgroundColor: Colors.transparent,
       centerTitle: true,
       title: Text(
-        'Palliative Care Centers',
-        style: Theme.of(
-          context,
-        ).textTheme.headlineLarge?.copyWith(fontSize: 20),
+        title,
+        style: Theme.of(context).textTheme.labelLarge?.copyWith(fontSize: 20),
       ),
-      actions: [Icon(Icons.more_vert, size: 26, color: AppColors.textPrimary)],
+      actions: [
+        PopupMenuButton<String>(
+          color: AppColors.textPrimary,
+          onSelected: (value) {},
+          itemBuilder: (context) => [
+            const PopupMenuItem(value: 'settings', child: Text('Settings')),
+            const PopupMenuItem(value: 'logout', child: Text('Logout')),
+          ],
+        ),
+      ],
     );
   }
 

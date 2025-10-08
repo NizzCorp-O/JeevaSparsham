@@ -18,25 +18,23 @@ class CentersSearchField extends StatelessWidget {
       },
       decoration: InputDecoration(
         filled: true,
-        fillColor: AppColors.backgroundSecondary,
+        fillColor: Color.fromRGBO(249, 247, 244, 1),
         prefixIcon: Icon(
           Icons.search,
           color: Color.fromRGBO(170, 183, 184, 1),
           size: 25,
         ),
         hintText: 'Search centers...',
-        hintStyle: Theme.of(context).textTheme.bodySmall,
-
+        hintStyle: Theme.of(context).textTheme.bodySmall?.copyWith(
+          color: Color.fromRGBO(173, 174, 188, 1),
+        ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(12)),
-          borderSide: BorderSide(color: AppColors.borderSecondary, width: 1),
+          borderSide: BorderSide(color: AppColors.borderPrimary, width: 1),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(12)),
-          borderSide: BorderSide(
-            color: Color.fromRGBO(229, 231, 235, 1),
-            width: 1,
-          ),
+          borderSide: BorderSide(color: AppColors.borderPrimary, width: 1),
         ),
       ),
     );

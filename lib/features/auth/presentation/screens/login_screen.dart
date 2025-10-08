@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hello_pratice/core/app_colors.dart';
 import 'package:hello_pratice/features/auth/presentation/widgets/login_form.dart';
-
 import 'package:hello_pratice/features/auth/presentation/widgets/login_header.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -10,7 +8,7 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.backgroundSecondary,
+      backgroundColor: Color.fromRGBO(249, 247, 244, 1),
       body: Center(
         child: SingleChildScrollView(
           child: Column(

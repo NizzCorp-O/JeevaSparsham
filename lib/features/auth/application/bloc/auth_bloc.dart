@@ -12,7 +12,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   AuthBloc({required this.loginUsecase, required this.checkUserRoleUsecase})
     : super(AuthInitial()) {
+      
     //LOG IN
+
     on<LoginRequested>((event, emit) async {
       try {
         emit(LoginLoading());

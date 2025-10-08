@@ -1,19 +1,31 @@
-import 'package:hello_pratice/features/centers/domain/entities/center.dart';
+import 'package:hello_pratice/features/centers/domain/entities/palliative_center.dart';
 import 'package:latlong2/latlong.dart';
 
 abstract class ICenterRepository {
-  Future<List<Center>> getAllPalliativeCenters();
-  Future<Center> getCenterDetails(String centerId);
+  Future<List<PalliativeCenter>> getAllPalliativeCenters();
+  Future<PalliativeCenter> getCenterDetails(String centerId);
 
-  Future<void> addCenter(Center center);
-  Future<void> editCenter({required String centerId, required Center center});
+  Future<void> editCenter({
+    required String centerId,
+    required PalliativeCenter center,
+  });
   Future<void> deleteCenter(String centerId);
 
-  Future<List<Center>> searchCenters(String query);
+  Future<List<PalliativeCenter>> searchCenters(String query);
   Future<void> makePhoneCall(String phoneNumber);
+
+  Future<void> createCenter(PalliativeCenter center);
+
 
   Future<String?> pickImageFromGallery();
 
+  Future<List<String>> searchPlacesByQuery(String query);
+
   Future<LatLng?> searchLocation(String query);
-  Future<List<String>> fetchPlaceSuggestions(String query);
+
+  
+  Future<String?> getAddressFromCoordinates({
+    required double lat,
+    required double lon,
+  });
 }

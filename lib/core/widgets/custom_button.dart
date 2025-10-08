@@ -31,7 +31,7 @@ class CustomButton extends StatelessWidget {
           child: Text(
             label,
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-              color: AppColors.primary,
+              color: AppColors.tertiary,
               fontSize: 16,
             ),
           ),
