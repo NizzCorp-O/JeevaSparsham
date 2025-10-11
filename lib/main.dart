@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -25,6 +26,9 @@ import 'package:hello_pratice/features/centers/application/usecases/search_cente
 import 'package:hello_pratice/features/centers/application/usecases/search_location_usecase.dart';
 import 'package:hello_pratice/features/centers/application/usecases/search_place_suggestions_usecase.dart';
 import 'package:hello_pratice/features/centers/domain/repositories/i_center_repository.dart';
+import 'package:hello_pratice/features/members/application/bloc/members_bloc.dart';
+import 'package:hello_pratice/features/members/application/bloc/members_event.dart';
+import 'package:hello_pratice/features/members/infrastructure/firebase_member_repository.dart';
 //CHANGED NEW
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -41,6 +45,13 @@ Future<void> main() async {
       ],
       child: MultiBlocProvider(
         providers: [
+          BlocProvider(
+            create: (_) => MemberBloc(
+              repository: MemberFirebaseRepository(
+                firestore: FirebaseFirestore.instance,
+              ),
+            )..add(LoadMembers()),
+          ),
           BlocProvider(
             create: (context) => AuthBloc(
               loginUsecase: LoginUsecase(context.read<IAuthRepository>()),

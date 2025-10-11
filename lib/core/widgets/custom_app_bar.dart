@@ -1,9 +1,14 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hello_pratice/core/app_colors.dart';
+import 'package:hello_pratice/features/members/presentation/screens/member_detail_screen.dart';
+import 'package:hello_pratice/features/members/presentation/screens/members_page.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
-  const CustomAppBar(this.title, {super.key});
+  CustomAppBar(this.title, {super.key});
+
+  final memberId = FirebaseAuth.instance.currentUser!.uid;
 
   @override
   Widget build(BuildContext context) {
@@ -16,11 +21,33 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       ),
       actions: [
         PopupMenuButton<String>(
-          color: AppColors.textPrimary,
+          color: AppColors.tertiary,
           onSelected: (value) {},
           itemBuilder: (context) => [
-            const PopupMenuItem(value: 'settings', child: Text('Settings')),
-            const PopupMenuItem(value: 'logout', child: Text('Logout')),
+            PopupMenuItem(
+              value: 'M Details',
+              child: Text('M Details'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) =>
+                        MemberDetailScreen(memberId: memberId),
+                  ),
+                );
+              },
+            ),
+            PopupMenuItem(
+              value: 'Members',
+              child: Text( 'Members'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => MembersPage()),
+                );
+              },
+            ),
+            
           ],
         ),
       ],
