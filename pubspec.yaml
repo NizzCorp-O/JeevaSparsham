@@ -1,0 +1,55 @@
+name: hello_pratice
+description: "A new Flutter project."
+publish_to: 'none'
+version: 0.1.0
+
+environment:
+  sdk: ^3.8.1
+
+dependencies:
+  flutter:
+    sdk: flutter
+  firebase_auth: ^6.0.1
+  cloud_firestore: ^6.0.0
+  bloc: ^9.0.0
+  integration_test:
+    sdk: flutter
+  firebase_auth_mocks: ^0.15.0
+  flutter_svg: ^2.2.1
+  firebase_core: ^4.1.0
+  flutter_bloc: ^9.1.1
+  dotted_border: ^3.1.0
+  flutter_map: ^8.2.1
+  image_picker: ^1.2.0
+  url_launcher: ^6.3.2
+  geocoding: ^4.0.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+  mockito: ^5.5.0
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/icons/
+    - assets/images/ 
+
+  fonts:
+    - family: Inter
+      fonts:
+        - asset: assets/fonts/inter/Inter-Regular.otf
+          weight: 400
+        - asset: assets/fonts/inter/Inter-Medium.otf
+          weight: 500   
+        - asset: assets/fonts/inter/Inter-SemiBold.otf
+          weight: 600        
+    - family: Nunito
+      fonts:
+        - asset: assets/fonts/nunito/Nunito-Regular.ttf
+          weight: 400       
+
+    
+           
